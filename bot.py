@@ -33,4 +33,7 @@ if __name__ == '__main__':
     start_handler = CommandHandler('start', start)
     application.add_handler(start_handler)
 
+    gpu_handler = CommandHandler('gpu_state', gpu_state)
+    application.add_handler(gpu_handler)
+
     application.run_polling()
