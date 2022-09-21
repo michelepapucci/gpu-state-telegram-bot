@@ -20,7 +20,8 @@ async def gpu_state(update: Update, context: ContextTypes.DEFAULT_TYPE):
         info = nvmlDeviceGetMemoryInfo(handle)
         await context.bot.send_message(chat_id=update.effective_chat.id,
                                        text=f"Device: {nvmlDeviceGetName(handle)}\n"
-                                            f"Used Memory {info.used}/{info.total} - Remaining: {info.free}")
+                                            f"Used Memory {info.used * pow(10, -9)} GB/{info.total * pow(10, -9)} GB "
+                                            f"- Remaining: {info.free * pow(10, -9)} GB")
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
