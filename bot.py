@@ -9,16 +9,18 @@ logging.basicConfig(
     level=logging.INFO
 )
 
+nvmlInit()
+
 
 async def gpu_state(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    deviceCount = nvmlDeviceGetCount()
-    for i in range(deviceCount):
-        ...
+    device_count = nvmlDeviceGetCount()
+    for i in range(device_count):
+        logging.info(f"Received /gpu_state from: {update.effective_chat.id}")
         handle = nvmlDeviceGetHandleByIndex(i)
-
-        print("Device", i, ":", nvmlDeviceGetName(handle))
         info = nvmlDeviceGetMemoryInfo(handle)
-        print(f"Used Memory {info.used}/{info.total} - Remaining: {info.free}")
+        await context.bot.send_message(chat_id=update.effective_chat.id,
+                                       text=f"Device: {nvmlDeviceGetName(handle)}\n"
+                                            f"Used Memory {info.used}/{info.total} - Remaining: {info.free}")
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
